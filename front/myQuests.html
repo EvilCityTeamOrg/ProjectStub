@@ -51,74 +51,50 @@
 
     <script>
         const query = new URL(window.location).searchParams;
-        fetch("./user/get").then((res) => {
+        fetch("./myquest").then((res) => {
             if (res.status == 401) {
                 window.location = './login.html';
             }
             res.json().then((json) => {
-                document.getElementById('content').innerHTML = `
-                <h1 style="text-align: center;">${json.username}</h1>
+                let html = `
+                <h1 style="text-align: center;">Мои квесты</h1>
                 <br>
-                <h3>Недавние заказы:</h3>
-                <div id="content-orders">
-                    <div class="d-flex justify-content-center">
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                </div>
-                <h3>Купоны:</h3>
-                <div id="content-bonuses">
-                    <div class="d-flex justify-content-center">
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                </div>
+                <h3>Мои квесты:</h3>
+                <div style="display: flex; flex-direction: column;">
                 `;
-                fetch('./orders').then((res) => {
-                    res.json().then((json) => {
-                        let html = "<div style=\"display: flex; flex-direction: column;\">";
-                        json.values.forEach(element => {
-                            const sp = element.text.split('|');
-                            html += `
-                            <div class="order"><h5 class="card-title">${sp[0]}</h5><ul>
-                            `;
-                            sp.splice(0, 1);
-                            sp.forEach(e => {
-                                html += `<li>${e}</li>`
-                            })
-                            html += `</ul></div>`;
-                        });
-                        document.getElementById('content-orders').innerHTML = html + "</div>";
-                        fetch("./bonuses/receive").then((res) => {
-                            res.json().then((json) => {
-                                let html = "<div style=\"display: flex; flex-direction: column;\">";
-                                json.values.forEach(element => {
-                                    html += `
-                                    <div class="bonus"><h5 class="card-title">${element.name}</h5>
-                                        <img onclick="window.location = './qr.html?uid=${element.uid}';" src="https://api.qrserver.com/v1/create-qr-code/?data=${element.uid}&size=300x300">
-                                        <small>Нажмите на QR код чтобы приблизить</small>
-                                    </div>
-                                    `;
-                                });
-                                document.getElementById('content-bonuses').innerHTML = html + "</div>";
-                            }).catch(err => {
-                                console.error(err);
-                                window.location = "./fail.html";
-                            })
-                        }).catch(err => {
-                            console.error(err);
-                            window.location = "./fail.html";
-                        });
-                    }).catch(err => {
-                        console.error(err);
-                        window.location = "./fail.html";
-                    })
-                }).catch(err => {
-                    console.error(err);
-                    window.location = "./fail.html";
-                })
+                /*json.values.push({
+                    questId: "748c3343-68ac-46f4-98de-5ca24d08badc",
+                    userId: "aea36b8f-b09c-4b62-a5bf-2344ddeff272",
+                    progress: 1,
+                    quest: {
+                        name: "Сделай 3 заказа в Курочка Рядом",
+                        text: "5",
+                        restaurantId: "3b68bb6f-7ad8-490c-8e3f-e7fb176a3b53"
+                    }
+                });
+                json.values.push({
+                    questId: "748c3343-68ac-46f4-98de-5ca24d08badc",
+                    userId: "aea36b8f-b09c-4b62-a5bf-2344ddeff272",
+                    progress: 5,
+                    quest: {
+                        name: "Сделай 3 заказа в Курочка Рядом",
+                        text: "5",
+                        restaurantId: "3b68bb6f-7ad8-490c-8e3f-e7fb176a3b53"
+                    }
+                });*/
+                json.values.forEach(element => {
+                    html += `
+                    <div class="progresss">
+                        <h5 class="card-title">${element.quest.name}</h5>
+                        <div class="progress progressss" role="progressbar" aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar progress-bar-striped${element.progress == element.quest.text ? ' bg-success' : ''}" style="width: ${element.progress / parseInt(element.quest.text) * 100}%">
+                                ${element.progress == element.quest.text ? 'Награда получена' : 'Осталось ' + (parseInt(element.quest.text) - element.progress)}
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                });
+                document.getElementById('content').innerHTML = html + "</div>";
             }).catch(err => {
                 console.error(err);
                 window.location = "./fail.html";

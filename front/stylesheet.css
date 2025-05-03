@@ -7,6 +7,16 @@
   padding: 10px;
   margin: 10px;
 }
+.progresss {
+  border: 2px solid #c4c4c4;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+}
+.progressss {
+  --bs-progress-bg: #b4b4b4;
+  margin-top: 10px;
+}
 .bonus {
   border: 2px solid #c4c4c4;
   border-radius: 5px;
