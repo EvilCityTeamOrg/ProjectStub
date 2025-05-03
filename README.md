@@ -24,14 +24,14 @@
 - [x] GET /login (авторизация)
 - [x] POST /register (регистрация)
 - [x] GET /logout (Exit)
-- [ ] GET /quest (возвращает доступные квесты для карты)
-- [ ] GET /myquest (возращает мои квесты)
-- [ ] GET /orders (Возвращает заказы пользователя)
-- [ ] GET /bonuses/recieve (полученные бонусы за квесты)
-- [ ] PUT /user/change (изменение данных пользователя)
-- [ ] DELETE /user/delete (удаление пользователя)
-- [ ] GET /user/get (данные о пользователе)
-- [ ] POST /quest/take (принять квест)
+- [x] GET /quest (возвращает доступные квесты для карты)
+- [x] GET /myquest (возращает мои квесты)
+- [x] GET /orders (Возвращает заказы пользователя)
+- [x] GET /bonuses/recieve (полученные бонусы за квесты)
+- [x] PUT /user/change (изменение данных пользователя)
+- [x] DELETE /user/delete (удаление пользователя)
+- [x] GET /user/get (данные о пользователе)
+- [x] POST /quest/take (принять квест)
 - [ ] * POST /quest/create (создание квеста)
 - [ ] * DELETE /quest/delete (Удаление квеста)
 - [ ] * GET /bonuses/get (получение данных при использовании купона)
@@ -59,6 +59,7 @@
 - icon url
 - lat
 - lon
+- token
 
 **Progress**
 - uid

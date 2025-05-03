@@ -64,4 +64,17 @@ public class Quest extends DBAbstractEntity {
         return quests;
     }
 
+    public static List<Quest> getQuestsByRestaurantId(String restaurantId){
+        MongoCursor<Document> raw = ConnectionManager.getDatabase().getCollection("quests")
+                .find(Filters.eq("restaurantId", restaurantId)).iterator();
+
+        ArrayList<Quest> quests = new ArrayList<>();
+
+        while (raw.hasNext()){
+            quests.add(new Quest(raw.next()));
+        }
+        raw.close();
+        return quests;
+    }
+
 }

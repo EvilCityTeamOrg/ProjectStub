@@ -34,6 +34,8 @@ public class Restaurant extends DBAbstractEntity {
         set("lon", sb.toString());
     }
     public List<String> getLon() { return new ArrayList<>(List.of(getString("lon").split("\\|"))); }
+    public String getToken() { return getString("token"); }
+    public void setToken(String token) { set("token", token); }
 
     public static List<Restaurant> getRestaurant() {
         MongoCursor<Document> raw = ConnectionManager.getDatabase().getCollection("restaurants").find().iterator();
@@ -57,6 +59,12 @@ public class Restaurant extends DBAbstractEntity {
     public static Restaurant getRestaurantByUid(String uid){
         Document raw = ConnectionManager.getDatabase().getCollection("restaurants")
                 .find(Filters.eq("uid", uid)).first();
+        return new Restaurant(raw);
+    }
+
+    public static Restaurant getRestaurantByToken(String token){
+        Document raw = ConnectionManager.getDatabase().getCollection("restaurants")
+                .find(Filters.eq("token", token)).first();
         return new Restaurant(raw);
     }
 }
