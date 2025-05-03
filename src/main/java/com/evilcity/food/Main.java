@@ -1,14 +1,21 @@
 package com.evilcity.food;
 
 import com.evilcity.food.db.ConnectionManager;
+import com.evilcity.food.db.entity.Bonus;
 import com.evilcity.food.db.entity.User;
+import com.evilcity.food.utils.Security;
+import com.evilcity.food.web.WebServer;
 
+import javax.swing.*;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
+        Security.init();
         parseCLI(args);
         ConnectionManager.connect();
+        WebServer.init();
     }
 
     private static final HashMap<String, Object> cli = new HashMap<>();
