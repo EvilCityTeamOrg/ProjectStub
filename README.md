@@ -17,8 +17,9 @@
 
 
 **Endpoints**
-- [ ] GET /login (авторизация)
-- [ ] POST /register (регистрация)
+- [x] GET /login (авторизация)
+- [x] POST /register (регистрация)
+- [x] GET /logout (Exit)
 - [ ] GET /quest (возвращает доступные квесты для карты)
 - [ ] GET /myquest (возращает мои квесты)
 - [ ] GET /recentorders (Возвращает заказы пользователя)
