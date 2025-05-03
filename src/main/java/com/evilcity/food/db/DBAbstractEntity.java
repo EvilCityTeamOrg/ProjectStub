@@ -8,8 +8,12 @@ import org.bson.Document;
  * Every entity that uses this class <b>MUST</b> contain unique uid field for identification.
  */
 public class DBAbstractEntity {
-    final Document raw;
-    final String collection;
+    protected final Document raw;
+    protected final String collection;
+
+    public Document getRaw() {
+        return raw;
+    }
 
     public DBAbstractEntity(String collection, Document raw) {
         this.collection = collection;
