@@ -32,3 +32,36 @@
 - [ ] * GET /bonuses/get (получение данных при использовании купона)
 - [ ] * POST /bonuses/change (изменение прогресса квеста)
 - [ ] * GET /statistic (популярность квестов)
+
+
+### Сущности db
+
+**User**
+- uid
+- username
+- mail
+- password
+
+**Quest**
+- uid
+- name
+- text
+- id restaurant
+
+**Restaurant**
+- uid
+- name
+- icon url
+- lat
+- lon
+
+**ProgressQuest**
+- uid
+- id quest
+- id user
+- progress
+
+**Bonuses**
+- uid
+- id user
+- text
