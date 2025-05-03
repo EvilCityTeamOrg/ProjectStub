@@ -26,7 +26,7 @@ public class Progress extends DBAbstractEntity {
     public User getUser() { return User.getUserByUID(getUserId()); }
 
 
-    public static Progress createProgress(String uid, String questId, String userId, String progress){
+    public static Progress createProgress(String uid, String questId, String userId, int progress){
         Document raw = new Document()
                 .append("uid", uid)
                 .append("questId", questId)
