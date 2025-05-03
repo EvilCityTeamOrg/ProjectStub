@@ -56,13 +56,18 @@
 - lat
 - lon
 
-**ProgressQuest**
+**Progress**
 - uid
 - id quest
 - id user
 - progress
 
-**Bonuses**
+**Bonus**
+- uid
+- id user
+- text
+
+**Order**
 - uid
 - id user
 - text
