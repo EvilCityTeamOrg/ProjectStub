@@ -1,10 +1,14 @@
 package com.evilcity.food;
 
+import com.evilcity.food.db.ConnectionManager;
+import com.evilcity.food.db.entity.User;
+
 import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
         parseCLI(args);
+        ConnectionManager.connect();
     }
 
     private static final HashMap<String, Object> cli = new HashMap<>();
