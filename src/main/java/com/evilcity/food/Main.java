@@ -1,12 +1,9 @@
 package com.evilcity.food;
 
 import com.evilcity.food.db.ConnectionManager;
-import com.evilcity.food.db.entity.Bonus;
-import com.evilcity.food.db.entity.User;
 import com.evilcity.food.utils.Security;
 import com.evilcity.food.web.WebServer;
 
-import javax.swing.*;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
