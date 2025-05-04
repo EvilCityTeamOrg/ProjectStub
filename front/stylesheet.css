@@ -42,3 +42,10 @@
 ul {
   margin-bottom: 0px;
 }
+.mark {
+    width: 5px;
+    height: 5px;
+    border-radius: 1000px;
+    transform: translate(-50%, -50%);
+    background: cyan;
+}

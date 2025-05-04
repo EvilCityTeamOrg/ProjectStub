@@ -2,7 +2,7 @@ import requests, json
 
 data = []
 
-with open("./users.json", "r", encoding="utf-8") as f:
+with open("../users.json", "r", encoding="utf-8") as f:
     a = json.load(f)
 
 for obj in a:

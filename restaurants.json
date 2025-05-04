@@ -2,15 +2,15 @@
   {
     "name": "Subway",
     "iconUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF8dP58l4Sm4U--Vd-H5F_OLjtImLCUKQAOw&s",
-    "lat": ["73.394464", "73.284146"],
-    "lon": ["54.983193", "54.971909"],
+    "lat": "73.394464|73.284146",
+    "lon": "54.983193|54.971909",
     "token": "cdbedf54-9550-45aa-a783-580576d65935"
   },
   {
     "name": "Курочка рядом",
     "iconUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaYlpA7Pmig7RPEz9MnbFonUyRM_yV8bsGzw&s",
-    "lat": ["73.327588", "73.327588"],
-    "lon": ["54.978182", "54.978182"],
+    "lat": "73.327588|73.327588",
+    "lon": "54.978182|54.978182",
     "token": "8a1f4796-66c8-4a3a-959c-723fb118c955"
   }
 ]

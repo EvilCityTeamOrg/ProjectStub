@@ -3,7 +3,6 @@ package com.evilcity.food.web;
 import com.evilcity.food.Main;
 import com.evilcity.food.db.ConnectionManager;
 import com.evilcity.food.db.entity.*;
-import com.evilcity.food.utils.Converter;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import io.javalin.Javalin;
@@ -86,7 +85,10 @@ public class WebServer {
                      completed.add(p.uid());
                  }
              }
-             Converter.sendJson(ctx, quests.stream().filter(quest -> !completed.contains(quest.uid())).toList());
+            ctx.contentType("application/json");
+
+            ctx.result(new Document().append("values", quests.stream().filter(quest -> !completed.contains(quest.uid())).peek(q -> q.getRaw().append("quest", q.getQuest().getRaw())).map(q -> q.getRaw()).toList()).toJson());
+             //Converter.sendJson(ctx, );
         });
 
         app.get("/logout", (ctx) -> {
@@ -100,12 +102,18 @@ public class WebServer {
                 ctx.status(401);
                 return;
             }
-            Converter.sendJson(ctx, Progress.getProgressByUserId(user.uid())
+            ctx.contentType("application/json");
+            ctx.result(new Document().append("values", Progress.getProgressByUserId(user.uid())
                     .stream()
                     .peek(progress ->
                             progress.getRaw().append("quest", progress.getQuest().getRaw()))
-                    .toList()
-            );
+                    .map(o -> o.getRaw()).toList()).toJson());
+//            Converter.sendJson(ctx, Progress.getProgressByUserId(user.uid())
+//                    .stream()
+//                    .peek(progress ->
+//                            progress.getRaw().append("quest", progress.getQuest().getRaw()))
+//                    .toList()
+//            );
         });
 
         app.get("/orders", (ctx) -> {
@@ -114,7 +122,9 @@ public class WebServer {
                 ctx.status(401);
                 return;
             }
-            Converter.sendJson(ctx, Order.getOrdersByUserId(user.uid()));
+            ctx.contentType("application/json");
+            ctx.result(new Document().append("values", Order.getOrdersByUserId(user.uid()).stream().map(o -> o.getRaw()).toList()).toJson());
+//            Converter.sendJson(ctx, Order.getOrdersByUserId(user.uid()));
         });
 
         app.get("/bonuses/receive", (ctx) -> {
@@ -124,7 +134,9 @@ public class WebServer {
                 return;
             }
             List<Bonus> bonuses = Bonus.getBonusesByUserId(user.uid());
-            Converter.sendJson(ctx, bonuses);
+            ctx.contentType("application/json");
+            ctx.result(new Document().append("values", bonuses.stream().map(b -> b.getRaw()).toList()).toJson());
+//            Converter.sendJson(ctx, bonuses);
         });
 
         app.put("/user/change", (ctx) -> {

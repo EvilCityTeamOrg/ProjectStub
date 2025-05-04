@@ -87,8 +87,8 @@
                     <div class="progresss">
                         <h5 class="card-title">${element.quest.name}</h5>
                         <div class="progress progressss" role="progressbar" aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar progress-bar-striped${element.progress == element.quest.text ? ' bg-success' : ''}" style="width: ${element.progress / parseInt(element.quest.text) * 100}%">
-                                ${element.progress == element.quest.text ? 'Награда получена' : 'Осталось ' + (parseInt(element.quest.text) - element.progress)}
+                            <div class="progress-bar progress-bar-striped${element.progress == 0 ? ' bg-success' : ''}" style="width: ${element.progress == 0 ? 9999999 : element.progress / parseInt(element.quest.text) * 100}%">
+                                ${element.progress == 0 ? 'Награда получена' : 'Осталось ' + (parseInt(element.quest.text) - element.progress)}
                             </div>
                         </div>
                     </div>
