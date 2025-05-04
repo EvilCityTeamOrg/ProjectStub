@@ -42,10 +42,12 @@ public class WebServer {
              User user = User.getUserByUsername(username);
              if (user != null){
                  ctx.status(400);
+                 ctx.redirect("/register.html?s=400");
                  return;
              }
-             User.registerUser(ConnectionManager.generateRandomUID(), username, email, password);
-             ctx.result();
+             user = User.registerUser(ConnectionManager.generateRandomUID(), username, email, password);
+             ctx.sessionAttribute("userId", user.uid());
+             ctx.redirect("/app.html");
         });
 
         app.get("/login", (ctx) -> {
@@ -58,15 +60,17 @@ public class WebServer {
             User user = User.getUserByUsername(username);
             if(user == null){
                 ctx.status(403);
+                ctx.redirect("/login.html?s=403");
                 return;
             }
             boolean compared = user.comparePassword(password);
             if(!compared){
                 ctx.status(403);
+                ctx.redirect("/login.html?s=403");
                 return;
             }
             ctx.sessionAttribute("userId", user.uid());
-            ctx.result();
+            ctx.redirect("/app.html");
         });
 
         app.get("/quest", (ctx) -> {

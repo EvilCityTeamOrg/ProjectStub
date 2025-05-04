@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>Вход</title>
+</head>
+
+<body class="position-relative h-100vh" style="background-color: #e6e6e6; padding-inline: 10px;">
+    <div id="content">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Загрузка...</span>
+        </div>
+    </div>
+    <a href="./app.html">
+        <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 15px;">Назад</button>
+    </a>
+    <script>
+        const query = new URL(window.location).searchParams;
+        document.getElementById("content").innerHTML = `
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=${query.get('uid')}&size=300x300" style="width: 100%; aspect-ratio: 1/1;">
+        `;
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

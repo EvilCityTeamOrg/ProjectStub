@@ -1,0 +1,44 @@
+.h-100vh {
+  height: 100vh !important;
+}
+.order {
+  border: 2px solid #c4c4c4;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+}
+.progresss {
+  border: 2px solid #c4c4c4;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+}
+.progressss {
+  --bs-progress-bg: #b4b4b4;
+  margin-top: 10px;
+}
+.bonus {
+  border: 2px solid #c4c4c4;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  position: relative;
+}
+.bonus h5 {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.bonus small {
+  position: absolute;
+  display: block;
+  bottom: 10px;
+  left: 10px;
+}
+.bonus img {
+  float: right;
+  zoom: 0.25;
+}
+ul {
+  margin-bottom: 0px;
+}
