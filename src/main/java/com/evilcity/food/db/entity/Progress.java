@@ -47,9 +47,16 @@ public class Progress extends DBAbstractEntity {
         raw.close();
         return progresses;
     }
+
     public static Progress getProgressByUid(String uid){
         Document raw = ConnectionManager.getDatabase().getCollection("progress")
                 .find(Filters.eq("uid", uid)).first();
+        return new Progress(raw);
+    }
+
+    public static Progress getProgressByQuestId(String uid){
+        Document raw = ConnectionManager.getDatabase().getCollection("progress")
+                .find(Filters.eq("questId", uid)).first();
         return new Progress(raw);
     }
 }

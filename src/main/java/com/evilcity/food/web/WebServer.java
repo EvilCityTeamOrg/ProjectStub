@@ -4,6 +4,7 @@ import com.evilcity.food.Main;
 import com.evilcity.food.db.ConnectionManager;
 import com.evilcity.food.db.entity.*;
 import com.evilcity.food.utils.Converter;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
@@ -11,6 +12,7 @@ import org.bson.BsonArray;
 import org.bson.Document;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class WebServer {
     private static Javalin app;
@@ -199,6 +201,111 @@ public class WebServer {
                     user.uid(),
                     100
             );
+            ctx.result();
+        });
+
+        app.post("/quest/create", (ctx) -> {
+            String token = ctx.queryParam("token");
+            if(token == null){
+                ctx.status(400);
+                return;
+            }
+            Restaurant restaurant = Restaurant.getRestaurantByToken(token);
+            if(restaurant == null){
+                ctx.status(403);
+                return;
+            }
+            Properties props = new Properties();
+            props.load(ctx.bodyInputStream());
+            String name = props.getProperty("name");
+            String text = props.getProperty("text");
+            String restaurantId = props.getProperty("restaurantId");
+
+            if(name == null || text == null || restaurantId == null){
+                ctx.status(400);
+                return;
+            }
+
+            Quest quest = Quest.createNewQuest(
+                    ConnectionManager.generateRandomUID(),
+                    name,
+                    text,
+                    restaurantId
+            );
+            ctx.result();
+        });
+
+        app.delete("/quest/delete", (ctx) -> {
+            Restaurant restaurant = Restaurant.getRestaurantByToken(ctx.queryParam("token"));
+            Quest quest = Quest.findQuestById(ctx.queryParam("id"));
+            if(restaurant == null || quest == null){
+                ctx.status(403);
+                return;
+            }
+            ConnectionManager.getDatabase().getCollection("quests").deleteOne(quest.getRaw());
+            ConnectionManager.getDatabase().getCollection("progress").deleteMany(Filters.eq(
+                    "questId", quest.uid()
+            ));
+            ctx.result();
+        });
+
+        app.post("/bonus/change", (ctx) -> {
+            Restaurant restaurant = Restaurant.getRestaurantByToken(ctx.queryParam("token"));
+            Bonus bonus = Bonus.getBonusByUid(ctx.queryParam("id"));
+            if(restaurant == null || bonus == null){
+                ctx.status(403);
+                return;
+            }
+            Properties props = new Properties();
+            props.load(ctx.bodyInputStream());
+            String userId = props.getProperty("userId");
+            String text = props.getProperty("text");
+            if(text == null || userId == null){
+                ctx.status(400);
+                return;
+            }
+            bonus.bulkUpdate().setOne("userId", userId).setOne("text", text).run();
+            ctx.result();
+        });
+
+        app.get("/statistic", (ctx) -> {
+            Restaurant restaurant = Restaurant.getRestaurantByToken(ctx.queryParam("token"));
+            if(restaurant == null){
+                ctx.status(403);
+                return;
+            }
+            List<Quest> quests = Quest.getQuestsByRestaurantId(restaurant.uid());
+            if(quests.isEmpty()){
+                ctx.status(403);
+                return;
+            }
+            Set<String> questIds = quests.stream()
+                    .map(q -> q.uid())
+                    .filter(id -> id != null)
+                    .collect(Collectors.toSet());
+
+            String count = String.valueOf(ConnectionManager.getDatabase().getCollection("progress").countDocuments(
+                    Filters.and(
+                            Filters.in("questId", questIds),
+                            Filters.eq("progress", 0)
+                    )
+            ));
+            ctx.result(count);
+        });
+
+        app.post("/bonuses/change", (ctx) -> {
+            Restaurant restaurant = Restaurant.getRestaurantByToken(ctx.queryParam("token"));
+            if(restaurant == null){
+                ctx.status(403);
+                return;
+            }
+            Quest quest = Quest.findQuestById(ctx.queryParam("id"));
+            if(quest == null){
+                ctx.status(400);
+                return;
+            }
+            Progress progress = Progress.getProgressByQuestId(quest.uid());
+            progress.bulkUpdate().setOne("progress", progress.getProgress() - 1).run();
             ctx.result();
         });
     }
