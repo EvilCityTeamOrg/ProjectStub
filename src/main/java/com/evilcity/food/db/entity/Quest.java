@@ -21,6 +21,10 @@ public class Quest extends DBAbstractEntity {
     public String getText() { return  getString("text"); }
     public String getIdRestaurant() { return getString("restaurantId"); }
 
+    public Restaurant getQuest() {
+        return Restaurant.getRestaurantByUid(getIdRestaurant());
+    }
+
     public static Quest createNewQuest(String uid,String name, String text, String restaurantId) {
         Document raw = new Document()
                 .append("uid", uid)
